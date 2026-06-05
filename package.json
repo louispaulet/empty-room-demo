@@ -5,8 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
-    "build": "tsc -b && vite build",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "tsc -p tsconfig.frontend.json --noEmit && vite build",
+    "build:backend": "npm run typecheck:backend && npm run worker:check",
     "test": "vitest run",
+    "test:frontend": "vitest run src",
+    "test:backend": "vitest run worker",
+    "typecheck": "tsc -b",
+    "typecheck:frontend": "tsc -p tsconfig.frontend.json --noEmit",
+    "typecheck:backend": "tsc -p tsconfig.backend.json --noEmit",
     "worker:check": "wrangler deploy --dry-run --config wrangler.jsonc",
     "worker:deploy": "wrangler deploy --config wrangler.jsonc",
     "worker:dev": "wrangler dev --config wrangler.jsonc --ip 127.0.0.1 --port 8787"
